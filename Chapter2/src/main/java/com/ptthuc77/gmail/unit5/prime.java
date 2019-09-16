@@ -3,8 +3,8 @@ package com.ptthuc77.gmail.unit5;
 import java.util.ArrayList;
 
 public class prime extends Thread {
-    public static ArrayList arr = new ArrayList();
-    
+    public static ArrayList<Integer> arr = new ArrayList<>();
+   
     private boolean checkPrime(int n) {
         if (n != 1) if (n == 2 || n == 3) {
             return true;
@@ -22,11 +22,14 @@ public class prime extends Thread {
 
     @Override
     public void run() {
-        synchronized(this) {
+    	synchronized(this) {
+    	
             for (int i = 1; i <= 1000; i++) {
                 if (checkPrime(i) == true) {
                     arr.add(i);
                 }
+              
+            	  this.notifyAll(); //noti to sum class when we have all primes.
             }
         }
     }
