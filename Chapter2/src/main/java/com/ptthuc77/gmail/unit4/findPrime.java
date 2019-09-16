@@ -1,6 +1,7 @@
 package com.ptthuc77.gmail.unit4;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class findPrime extends Thread {
     public static ArrayList arr = new ArrayList();
@@ -22,10 +23,52 @@ public class findPrime extends Thread {
     
     @Override
     public void run() {
-        for (int i = inputData.a; i <= inputData.b; i++) {
-            if (checkPrime(i) == true) {
-                arr.add(i);
-            }
+    	//use 2 thread to find
+    	int distance=inputData.b-inputData.a;
+    	
+    	Thread t1=new Thread(new Runnable() {
+			@Override
+			public void run() {
+				 for (int i = inputData.a; i <= distance/2; i++) {
+			            if (checkPrime(i) == true) {
+			            	synchronized (arr) {
+			            		arr.add(i);
+							}
+			                
+			            }
+			        }
+				
+			}
+		});
+    	Thread t2=new Thread(new Runnable() {
+			@Override
+			public void run() {
+				 for (int i = distance/2; i <= inputData.b; i++) {
+			            if (checkPrime(i) == true) {
+			            	synchronized (arr) {
+			            		arr.add(i);
+							}
+			            }
+			        }
+				
+			}
+		});
+    	
+        t1.start();
+        t2.start();
+        try {	//wait for both threads are complete
+			t1.join();
+			t2.join();
+		} catch (InterruptedException e) {
+			
+			e.printStackTrace();
+		}
+        
+        //sort result, because 2 threads are doing paralel
+        Collections.sort(arr);
+        
+        synchronized (this) {
+            this.notifyAll();//notify find process is done
         }
     }
 }

@@ -1,11 +1,31 @@
 package com.ptthuc77.gmail.unit2;
 
 public class perimeterRectangle extends Thread {
-    float width, height, perimeter;
+    private float perimeter;
+    private inputRectangle r;
     
-    @Override
+    //constructor
+    public perimeterRectangle(inputRectangle r) {
+		this.r = r;
+	}
+
+	public float getPerimeter() {
+		return perimeter;
+	}
+
+
+	@Override
     public void run() {
-        perimeter = (width + height) * 2;
-        System.out.println("The perimeter of rectangle is: " + perimeter);
+		//System.out.println("per start");
+		synchronized (r) {
+			try {
+				r.wait();
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+//		System.out.println("per wait for data done");
+			perimeter = (r.getWidth() + r.getHeight()) * 2;
+			
     }
 }

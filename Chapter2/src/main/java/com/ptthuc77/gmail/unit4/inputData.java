@@ -21,5 +21,9 @@ public class inputData extends Thread {
                 }
             }
         } while (a <= 0 || b <= a);
+        synchronized (this) {
+        	this.notifyAll(); //notify input process is done
+        }
+        
     }
 }

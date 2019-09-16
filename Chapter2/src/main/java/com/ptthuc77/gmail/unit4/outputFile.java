@@ -11,9 +11,9 @@ public class outputFile extends Thread {
         FileOutputStream out = null;
         try {
             out = new FileOutputStream("outfile.txt");
-            String title = "The prime number from " + inputData.a + " to " + inputData.b + " is\n";
+            String title = "The prime number from " + inputData.a + " to " + inputData.b + " is \n";
             out.write(title.getBytes());
-            System.out.println("The prime number from " + inputData.a + " to " + inputData.b + " is");
+            System.out.println(title);
             for(int i = 0; i < arr.size(); i++) {
                 byte b[] = String.valueOf(arr.get(i) + " ").getBytes();
                 out.write(b);

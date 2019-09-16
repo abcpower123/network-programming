@@ -1,11 +1,33 @@
 package com.ptthuc77.gmail.unit2;
 
 public class areaRectangle extends Thread {
-    float width, height, area;
+    private float  area;
+    private inputRectangle r;
+    
+   
     
     @Override
     public void run() {
-        area = width * height;
-        System.out.println("The area of rectangle is: " + area);
+//    	System.out.println("area start");
+    	synchronized (r) {
+    		try {
+				r.wait();
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+//    	System.out.println("area wait for data done");
+    	area = r.getWidth() * r.getHeight();
+    	
     }
+    //constructor
+	public areaRectangle(inputRectangle r) {
+		
+		this.r = r;
+	}
+	//getter
+	public float getArea() {
+		return area;
+	}
+	
 }

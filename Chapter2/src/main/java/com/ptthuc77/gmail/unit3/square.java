@@ -6,13 +6,14 @@ public class square extends Thread {
     @Override
     public void run() {
         while (true) {
+        	 try {
+                 Thread.sleep(1000);
+             } catch (InterruptedException ex) {
+                 System.out.println(ex.toString());
+             }
             result = (int) Math.pow(randomNumber.num, 2);
             System.out.println(randomNumber.num + " ^ 2 = " + result);
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException ex) {
-                System.out.println(ex.toString());
-            }
+           
         }       
     }
 }
