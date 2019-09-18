@@ -25,42 +25,36 @@ public class findPrime extends Thread {
     public void run() {
     	//use 2 thread to find
     	int distance=inputData.b-inputData.a;
-    	
     	Thread t1=new Thread(new Runnable() {
 			@Override
 			public void run() {
-				 for (int i = inputData.a; i <= distance/2; i++) {
+				 for (int i = inputData.a; i < inputData.a+ distance/2; i++) {
 			            if (checkPrime(i) == true) {
 			            	synchronized (arr) {
 			            		arr.add(i);
 							}
-			                
 			            }
 			        }
-				
 			}
 		});
     	Thread t2=new Thread(new Runnable() {
 			@Override
 			public void run() {
-				 for (int i = distance/2; i <= inputData.b; i++) {
+				 for (int i = inputData.a+distance/2; i <= inputData.b; i++) {
 			            if (checkPrime(i) == true) {
 			            	synchronized (arr) {
 			            		arr.add(i);
 							}
 			            }
 			        }
-				
 			}
 		});
-    	
         t1.start();
         t2.start();
         try {	//wait for both threads are complete
 			t1.join();
 			t2.join();
 		} catch (InterruptedException e) {
-			
 			e.printStackTrace();
 		}
         

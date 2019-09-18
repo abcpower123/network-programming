@@ -4,7 +4,7 @@ import java.util.Random;
 
 public class randomNumber extends Thread {
     Random rd = new Random();
-    public static int num=0;
+    public static int num=1;
     
     @Override
     public void run() {
